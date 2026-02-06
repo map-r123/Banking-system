@@ -44,12 +44,12 @@ int main()
             cout << "\nWithdraw Amount: ";
             cin >> withdraw;
             newAccount.withdraw(withdraw);
-            cout << "Deposit Successful\n";
+            cout << "Withdraw Successful\n";
             break;
         case 3:
             cout << "\nYour Balance: " << newAccount.checkBalance();
             break;
-        defualt:
+        default:
             cout << "Invalid choice\n";
             break;
         }
@@ -60,3 +60,4 @@ int main()
 
     return 0;
 }
+
