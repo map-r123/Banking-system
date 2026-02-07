@@ -1,63 +1,56 @@
 #include <iostream>
 #include "account.h"
+#include <iomanip>
 
 using namespace std;
 
 int main()
 {
-    int accountNo, selected, deposit, withdraw;
+    int selected =0;
     string name;
-    double balance;
+    account* newAccount= new account();
 
-
-    // This is to get information on the account
-    // can be turned into a function
-    cout << "***** Simple Banking System *****" << endl;
-    cout << "\nAccount No:";
-    cin >> accountNo;
-    cout << "Account Holder Name: ";
-    cin >> name;
-    cout << "Current Balance: ";
-    cin >> balance;
-
-    account newAccount(accountNo,name,balance);
-
-    do
+    while (selected!=5)
     {
         cout << "\n***** Simple Banking System *****" << endl;
-        cout << "\n1. Deposit" << endl;
+        cout << "\n1. Create Account" << endl;
         cout << "2. Withdraw\n";
-        cout << "3. Check Balance\n";
-        cout << "4. Exit\n\n";
+        cout << "3. Deposit\n";
+        cout << "4. Check Balance\n";
+        cout << "5. Exit\n\n";
         cout << "Enter your choice: ";
         cin >> selected;
+        cin.ignore();
 
         switch (selected)
         {
         case 1:
-            cout << "\nDeposit Amount: ";
-            cin >> deposit;
-            newAccount.deposit(deposit);
-            cout << "Deposit Successful\n";
+            newAccount->createAccount();
             break;
         case 2:
-            cout << "\nWithdraw Amount: ";
-            cin >> withdraw;
-            newAccount.withdraw(withdraw);
-            cout << "Withdraw Successful\n";
+            newAccount->withdraw();
             break;
         case 3:
-            cout << "\nYour Balance: " << newAccount.checkBalance();
+            newAccount->deposit();
+            break;
+        case 4:
+            cout << "\nYour Balance: " << fixed << setprecision(2) << newAccount->checkBalance() ;
+            break;
+        case 5:
+            cout << "Thank you " << name <<
+                " for using our simple banking system";
             break;
         default:
             cout << "Invalid choice\n";
             break;
         }
 
-    }while (selected!=4);
+    }
 
-    cout << "Thank you " << name << " for using our simple banking system";
 
+    delete newAccount;
+    newAccount = nullptr;
     return 0;
 }
+
 
