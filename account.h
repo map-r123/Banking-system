@@ -14,9 +14,10 @@ public:
     account();
     account(int a, string n, double b);
 
-    void deposit(double amount);
-    void withdraw(double amount);
+    void deposit();
+    void withdraw();
     double checkBalance();
+    void createAccount();
 };
 
 #endif // ACCOUNT_H
