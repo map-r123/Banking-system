@@ -1,6 +1,7 @@
 #ifndef ACCOUNT_H
 #define ACCOUNT_H
 #include <iostream>
+#include <map>
 
 using namespace std;
 
@@ -17,11 +18,13 @@ public:
 
     void deposit();
     void withdraw();
-    double checkBalance();
+    double checkBalance() const;
     void createAccount();
-    int getAccountNumber();
-    int getPin();
-    string getName();
+    int getAccountNumber() const;
+    int getPin() const;
+    string getName() const;
+    void saveAccounts(const map<int, account>& accList);
+    void readAccounts(map<int, account>& accList);
 };
 
 #endif // ACCOUNT_H
