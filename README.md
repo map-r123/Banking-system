@@ -9,11 +9,13 @@ A small console-based banking application in C++ that demonstrates basic account
 - Withdraw funds
 - Check current balance
 - Simple menu-driven CLI
+- Support multiple accounts
+- Add authentication (PIN/password)
+
+
 
 ## Future Enhancements
 
-- Support multiple accounts 
 - Persist accounts and transaction history to a file 
-- Add authentication (PIN/password)
 - Improve input validation and error handling
 - Add transaction history and receipts
