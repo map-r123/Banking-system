@@ -12,7 +12,7 @@ int main()
     account newAccount;
     map<int,account> accountList;
 
-    while (selected!=6)
+    while (selected!=8)
     {
         cout << "\n***** Simple Banking System *****" << endl;
         cout << "\n1. Create Account" << endl;
@@ -20,7 +20,9 @@ int main()
         cout << "3. Deposit\n";
         cout << "4. Check Balance\n";
         cout << "5. Login\n";
-        cout << "6. Exit\n\n";
+        cout << "6. Save accounts\n";
+        cout << "7. Load Accounts\n";
+        cout << "8. Exit\n\n";
         cout << "Enter your choice: ";
         cin >> selected;
         cin.ignore();
@@ -61,6 +63,14 @@ int main()
             }
             break;
         case 6:
+            newAccount.saveAccounts(accountList);
+            cout << "Save Complete\n";
+            break;
+        case 7:
+            newAccount.readAccounts(accountList);
+            cout << "Read Complete\n";
+            break;
+        case 8:
             cout << "Thank you " << newAccount.getName() <<
                 " for using our simple banking system";
             break;
