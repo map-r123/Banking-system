@@ -10,14 +10,18 @@ private:
     int accountNumber;
     string name;
     double balance;
+    int pin;
 public:
     account();
-    account(int a, string n, double b);
+    account(int a, string n, double b, int pin);
 
     void deposit();
     void withdraw();
     double checkBalance();
     void createAccount();
+    int getAccountNumber();
+    int getPin();
+    string getName();
 };
 
 #endif // ACCOUNT_H
