@@ -4,7 +4,7 @@ A small console-based banking application in C++ that demonstrates basic account
 
 ## Features
 
-- Create a single account with account number, holder name, and initial balance
+- An account with account number, holder name, and initial balance
 - Deposit funds
 - Withdraw funds
 - Check current balance
