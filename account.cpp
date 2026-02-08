@@ -1,4 +1,5 @@
 #include "account.h"
+#include <fstream>
 
 
 account::account() {}
@@ -36,7 +37,7 @@ void account::withdraw()
     cout << "Withdraw Successful\n";
 }
 
-double account::checkBalance()
+double account::checkBalance() const
 {
     return balance;
 }
@@ -71,17 +72,50 @@ void account::createAccount()
     cout << "Account Created Successfully\n";
 }
 
-int account::getAccountNumber()
+int account::getAccountNumber() const
 {
     return accountNumber;
 }
 
-int account::getPin()
+int account::getPin() const
 {
     return pin;
 }
 
-string account::getName()
+string account::getName() const
 {
     return name;
+}
+
+void account::saveAccounts(const map<int, account>& accList)
+{
+    ofstream file("accounts.txt");
+
+    for (const auto& pair : accList) {
+        const account& acc = pair.second;
+        file << acc.getAccountNumber() << " "
+             << acc.getName() << " "
+             << acc.checkBalance() << " "
+             << acc.getPin() << "\n";
+    }
+
+    file.close();
+}
+
+void account::readAccounts(map<int, account>& accList)
+{
+    ifstream myFile("accounts.txt");
+
+    double bal;
+    string nam;
+    int accNo,p;
+
+    while(myFile >> accNo >> nam>> bal>> p)
+    {
+        account acc(accNo, nam, bal, p);
+        accList[accNo]=acc;
+    }
+
+    myFile.close();
+
 }
