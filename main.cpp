@@ -45,6 +45,7 @@ int main()
             cout << "\nYour Balance: " << fixed << setprecision(2) << newAccount.checkBalance() ;
             break;
         case 5:
+        {
             int acc,pin;
             cout << "\n***** Login *****" << endl;
             cout << "\nAccount No: ";
@@ -52,7 +53,9 @@ int main()
             cout << "Pin: ";
             cin >> pin;
 
-            if(accountList[acc].getPin()==pin)
+            auto currentAccount = accountList.find(acc);
+
+            if(currentAccount != accountList.end())
             {
                 newAccount=accountList[acc];
                 cout << "Welcome " <<newAccount.getName() << endl;
@@ -62,11 +65,13 @@ int main()
                 cout << "Login Fail (Incorret Account Number or Pin)\n";
             }
             break;
+        }
         case 6:
             newAccount.saveAccounts(accountList);
             cout << "Save Complete\n";
             break;
         case 7:
+            accountList.clear();
             newAccount.readAccounts(accountList);
             cout << "Read Complete\n";
             break;
