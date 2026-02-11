@@ -1,6 +1,6 @@
 #include "account.h"
 #include <fstream>
-
+#include <sstream>
 
 account::account() {}
 
@@ -58,13 +58,12 @@ void account::createAccount()
     cout << "4 digit Pin: ";
     cin >> strPin;
 
-
-    while(strPin.length()!=4)
+    while(strPin.length()!=4 )
     {
         cout << "Please enter 4 digit pin: ";
         cin >> strPin;
     }
-
+    
     accountNumber=acc;
     name=nam;
     balance=bal;
@@ -93,9 +92,9 @@ void account::saveAccounts(const map<int, account>& accList)
 
     for (const auto& pair : accList) {
         const account& acc = pair.second;
-        file << acc.getAccountNumber() << " "
-             << acc.getName() << " "
-             << acc.checkBalance() << " "
+        file << acc.getAccountNumber() << "|"
+             << acc.getName() << "|"
+             << acc.checkBalance() << "|"
              << acc.getPin() << "\n";
     }
 
@@ -106,12 +105,28 @@ void account::readAccounts(map<int, account>& accList)
 {
     ifstream myFile("accounts.txt");
 
+    if (!myFile.is_open())
+    {
+        cout << "Error: Unable to open file\n";
+    }
+
     double bal;
-    string nam;
+    string nam, line, accStr, balStr, pinStr;
     int accNo,p;
 
-    while(myFile >> accNo >> nam>> bal>> p)
+    while(getline(myFile,line))
     {
+        stringstream ss(line);
+
+        getline(ss, accStr, '|');
+        getline(ss, nam, '|');
+        getline(ss, balStr, '|');
+        getline(ss, pinStr, '|');
+
+        accNo = stoi(accStr);
+        bal = stod(balStr);
+        pin = stoi(pinStr);
+
         account acc(accNo, nam, bal, p);
         accList[accNo]=acc;
     }
