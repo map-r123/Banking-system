@@ -2,15 +2,17 @@
 #include "account.h"
 #include <iomanip>
 #include <map>
+#include <cctype>
 
 using namespace std;
 
 int main()
 {
     int selected =0;
-    string name;
+    string strSelected;
     account newAccount;
     map<int,account> accountList;
+    bool loggedin = false;
 
     while (selected!=8)
     {
@@ -24,25 +26,56 @@ int main()
         cout << "7. Load Accounts\n";
         cout << "8. Exit\n\n";
         cout << "Enter your choice: ";
-        cin >> selected;
-        cin.ignore();
+        getline(cin, strSelected);
 
+        while(newAccount.typeValidation(strSelected)==false)
+        {
+            cout << "Invaild input. Please enter a number\n";
+            cout << "Enter your choice: ";
+            getline(cin, strSelected);
+        }
+        
+        selected = stoi(strSelected);
         switch (selected)
         {
         case 1:
             newAccount.createAccount();
             accountList[newAccount.getAccountNumber()] = newAccount;
+            loggedin=true;
             break;
         case 2:
-            newAccount.withdraw();
-            accountList[newAccount.getAccountNumber()]=newAccount;
+            if(loggedin==true)
+            {
+                newAccount.withdraw();
+                accountList[newAccount.getAccountNumber()]=newAccount;
+            }
+            else
+            {
+                cout << "Please Login\n";
+            }
+
             break;
         case 3:
-            newAccount.deposit();
-            accountList[newAccount.getAccountNumber()]=newAccount;
+            if(loggedin==true)
+            {
+                newAccount.deposit();
+                accountList[newAccount.getAccountNumber()]=newAccount;
+            }
+            else
+            {
+                cout << "Please Login\n";
+            }
+
             break;
         case 4:
-            cout << "\nYour Balance: " << fixed << setprecision(2) << newAccount.checkBalance() ;
+            if(loggedin==true)
+            {
+                cout << "\nYour Balance: " << fixed << setprecision(2) << newAccount.checkBalance() ;
+            }
+            else
+            {
+                cout << "Please Login\n";
+            }
             break;
         case 5:
         {
@@ -59,6 +92,7 @@ int main()
             {
                 newAccount=accountList[acc];
                 cout << "Welcome " <<newAccount.getName() << endl;
+                loggedin=true;
             }
             else
             {
