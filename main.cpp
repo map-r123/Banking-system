@@ -9,7 +9,7 @@ using namespace std;
 int main()
 {
     int selected =0;
-    string strSelected;
+    string strSelected="0";
     account newAccount;
     map<int,account> accountList;
     bool loggedin = false;
@@ -28,21 +28,24 @@ int main()
         cout << "Enter your choice: ";
         getline(cin, strSelected);
 
+        //Input validation
         while(newAccount.typeValidation(strSelected)==false)
         {
             cout << "Invaild input. Please enter a number\n";
             cout << "Enter your choice: ";
             getline(cin, strSelected);
         }
-        
+
         selected = stoi(strSelected);
         switch (selected)
         {
+            //Create account
         case 1:
             newAccount.createAccount();
             accountList[newAccount.getAccountNumber()] = newAccount;
             loggedin=true;
             break;
+            // Withdraw
         case 2:
             if(loggedin==true)
             {
@@ -55,6 +58,7 @@ int main()
             }
 
             break;
+            //Deposit
         case 3:
             if(loggedin==true)
             {
@@ -67,6 +71,7 @@ int main()
             }
 
             break;
+            //Check balance
         case 4:
             if(loggedin==true)
             {
@@ -77,18 +82,22 @@ int main()
                 cout << "Please Login\n";
             }
             break;
+            //Login
         case 5:
         {
-            int acc,pin;
+            int acc;
+            string pin;
             cout << "\n***** Login *****" << endl;
             cout << "\nAccount No: ";
             cin >> acc;
             cout << "Pin: ";
             cin >> pin;
+            cin.ignore();
 
+            //check for login
             auto currentAccount = accountList.find(acc);
 
-            if(currentAccount != accountList.end())
+            if(currentAccount != accountList.end() && currentAccount->second.getPin()==pin)
             {
                 newAccount=accountList[acc];
                 cout << "Welcome " <<newAccount.getName() << endl;
@@ -100,15 +109,18 @@ int main()
             }
             break;
         }
+            //Save accounts to a file
         case 6:
             newAccount.saveAccounts(accountList);
             cout << "Save Complete\n";
             break;
+            //Load accounts from accounts
         case 7:
             accountList.clear();
             newAccount.readAccounts(accountList);
             cout << "Read Complete\n";
             break;
+            //Exit app
         case 8:
             cout << "Thank you " << newAccount.getName() <<
                 " for using our simple banking system";
