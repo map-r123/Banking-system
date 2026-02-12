@@ -1,10 +1,11 @@
 #include "account.h"
 #include <fstream>
 #include <sstream>
+#include <cctype>
 
 account::account() {}
 
-account::account(int a, string n, double b, int p)
+account::account(int a, string n, double b, string p)
 {
     accountNumber=a;
     name=n;
@@ -55,19 +56,20 @@ void account::createAccount()
     getline(cin,nam);
     cout << "Current Balance: ";
     cin >> bal;
-    cout << "4 digit Pin: ";
+    cout << "Enter 4 digit pin: ";
     cin >> strPin;
 
-    while(strPin.length()!=4 )
+    while(lengthValidation(strPin)==false  || typeValidation(strPin)==false)
     {
-        cout << "Please enter 4 digit pin: ";
+        cout << "Invaild Pin. Please enter 4 digit pin: ";
         cin >> strPin;
+
     }
-    
+
     accountNumber=acc;
     name=nam;
     balance=bal;
-    pin= stoi(strPin);
+    pin= strPin;
     cout << "Account Created Successfully\n";
 }
 
@@ -76,7 +78,7 @@ int account::getAccountNumber() const
     return accountNumber;
 }
 
-int account::getPin() const
+string account::getPin() const
 {
     return pin;
 }
@@ -112,7 +114,7 @@ void account::readAccounts(map<int, account>& accList)
 
     double bal;
     string nam, line, accStr, balStr, pinStr;
-    int accNo,p;
+    int accNo;
 
     while(getline(myFile,line))
     {
@@ -125,12 +127,34 @@ void account::readAccounts(map<int, account>& accList)
 
         accNo = stoi(accStr);
         bal = stod(balStr);
-        pin = stoi(pinStr);
+        pin = pinStr;
 
-        account acc(accNo, nam, bal, p);
+        account acc(accNo, nam, bal, pinStr);
         accList[accNo]=acc;
     }
 
     myFile.close();
 
+}
+
+bool account::lengthValidation(string pin)
+{
+    if(pin.length()==4)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool account::typeValidation(string pin)
+{
+    for (int i = 0; i < pin.length(); ++i)
+    {
+        if(!isdigit(pin[i]))
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
