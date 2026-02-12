@@ -18,6 +18,7 @@ void account::deposit()
     double amount;
     cout << "\nDeposit Amount: ";
     cin >> amount;
+    cin.ignore();
     cout << "Deposit Successful\n";
     balance = balance + amount;
 }
@@ -25,15 +26,35 @@ void account::deposit()
 void account::withdraw()
 {
     double amount;
+    string strAmount;
     cout << "\nWithdraw Amount: ";
-    cin >> amount;
+    getline(cin, strAmount);
+
+    while(typeValidation(strAmount)==false)
+    {
+        cout << "Incorret Input type. Please input a number";
+        cout << "\nWithdraw Amount: ";
+        getline(cin, strAmount);
+    }
+
+    amount=stod(strAmount);
 
     while(amount > balance)
     {
         cout << "Withdraw amount is greater than current balance" << endl;
         cout << "Withdraw Amount: ";
-        cin >> amount;
+        getline(cin, strAmount);
+
+        while(typeValidation(strAmount)==false)
+        {
+            cout << "Incorret Input type. Please input a number";
+            cout << "\nWithdraw Amount: ";
+            getline(cin, strAmount);
+        }
+
+        amount=stod(strAmount);
     }
+
     balance = balance - amount;
     cout << "Withdraw Successful\n";
 }
@@ -56,14 +77,15 @@ void account::createAccount()
     getline(cin,nam);
     cout << "Current Balance: ";
     cin >> bal;
+    cin.ignore();
     cout << "Enter 4 digit pin: ";
-    cin >> strPin;
+    getline(cin, strPin);
+
 
     while(lengthValidation(strPin)==false  || typeValidation(strPin)==false)
     {
         cout << "Invaild Pin. Please enter 4 digit pin: ";
-        cin >> strPin;
-
+        getline(cin, strPin);
     }
 
     accountNumber=acc;
@@ -87,7 +109,7 @@ string account::getName() const
 {
     return name;
 }
-
+//Functions to save accounts to file
 void account::saveAccounts(const map<int, account>& accList)
 {
     ofstream file("accounts.txt");
@@ -103,6 +125,7 @@ void account::saveAccounts(const map<int, account>& accList)
     file.close();
 }
 
+//Function to load accounts from files
 void account::readAccounts(map<int, account>& accList)
 {
     ifstream myFile("accounts.txt");
@@ -136,7 +159,7 @@ void account::readAccounts(map<int, account>& accList)
     myFile.close();
 
 }
-
+//function to check if a string has 4 charactors
 bool account::lengthValidation(string pin)
 {
     if(pin.length()==4)
@@ -145,7 +168,9 @@ bool account::lengthValidation(string pin)
     }
     return false;
 }
-
+// function to check if a string is digital
+// an improvement is to return a string that has already been check
+// incorrent imput should be asked in the function
 bool account::typeValidation(string pin)
 {
     for (int i = 0; i < pin.length(); ++i)
