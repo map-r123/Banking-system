@@ -27,6 +27,7 @@ public:
     void readAccounts(map<int, account>& accList);
     bool lengthValidation(string pin);
     bool typeValidation(string pin);
+    double AmountValidation();
 };
 
 #endif // ACCOUNT_H
