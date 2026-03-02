@@ -17,7 +17,15 @@ void account::deposit()
 {
     double amount;
     cout << "\nDeposit Amount: ";
-    cin >> amount;
+    amount = AmountValidation();
+    while(cin.fail() || amount>0)
+    {
+        cin.clear();
+        cin.ignore();
+
+        cout << "Incorret Input type. Please input a number";
+        cin >> amount;
+    }
     cin.ignore();
     cout << "Deposit Successful\n";
     balance = balance + amount;
@@ -71,7 +79,12 @@ void account::createAccount()
     string nam,strPin;
     cout << "***** Create Account *****" << endl;
     cout << "\nAccount No:";
-    cin >> acc;
+    while(!(cin>>acc))
+    {
+        cout << "Invaild input. Please Enter a number: ";
+        cin.clear();
+        cin.ignore();
+    }
     cin.ignore();
     cout << "Account Holder Name: ";
     getline(cin,nam);
@@ -173,6 +186,8 @@ bool account::lengthValidation(string pin)
 // incorrent imput should be asked in the function
 bool account::typeValidation(string pin)
 {
+    
+    
     for (int i = 0; i < pin.length(); ++i)
     {
         if(!isdigit(pin[i]))
@@ -183,3 +198,21 @@ bool account::typeValidation(string pin)
 
     return true;
 }
+
+double account::AmountValidation()
+{
+    double amount;
+    cin >> amount;
+    while(cin.fail())
+    {
+        cin.clear();
+        cin.ignore();
+
+        cout << "Incorret Input type. Please input a number";
+        cin >> amount;
+    }
+    cin.ignore();
+
+    return amount;
+}
+
