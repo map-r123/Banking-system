@@ -14,6 +14,7 @@ int main()
     map<int,account> accountList;
     bool loggedin = false;
 
+    //while loop for the menu
     while (selected!=8)
     {
         cout << "\n***** Simple Banking System *****" << endl;
@@ -28,7 +29,7 @@ int main()
         cout << "Enter your choice: ";
         getline(cin, strSelected);
 
-        //Input validation
+        //Input validation for type(for the selected option)
         while(newAccount.typeValidation(strSelected)==false)
         {
             cout << "Invaild input. Please enter a number\n";
@@ -39,13 +40,13 @@ int main()
         selected = stoi(strSelected);
         switch (selected)
         {
-            //Create account
+        //Create account
         case 1:
             newAccount.createAccount();
             accountList[newAccount.getAccountNumber()] = newAccount;
             loggedin=true;
             break;
-            // Withdraw
+        // Withdraw
         case 2:
             if(loggedin==true)
             {
@@ -58,7 +59,7 @@ int main()
             }
 
             break;
-            //Deposit
+        //Deposit
         case 3:
             if(loggedin==true)
             {
@@ -71,7 +72,7 @@ int main()
             }
 
             break;
-            //Check balance
+        //Check balance
         case 4:
             if(loggedin==true)
             {
@@ -82,7 +83,7 @@ int main()
                 cout << "Please Login\n";
             }
             break;
-            //Login
+        //Login
         case 5:
         {
             int acc;
@@ -109,18 +110,18 @@ int main()
             }
             break;
         }
-            //Save accounts to a file
+        //Save accounts to a file
         case 6:
             newAccount.saveAccounts(accountList);
             cout << "Save Complete\n";
             break;
-            //Load accounts from accounts
+        //Load accounts from accounts
         case 7:
             accountList.clear();
             newAccount.readAccounts(accountList);
             cout << "Read Complete\n";
             break;
-            //Exit app
+        //Exit app
         case 8:
             cout << "Thank you " << newAccount.getName() <<
                 " for using our simple banking system";
