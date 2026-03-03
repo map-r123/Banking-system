@@ -13,54 +13,25 @@ account::account(int a, string n, double b, string p)
     pin=p;
 }
 
-void account::deposit()
+void account::deposit() // method to deposit
 {
     double amount;
     cout << "\nDeposit Amount: ";
     amount = AmountValidation();
-    while(cin.fail() || amount>0)
-    {
-        cin.clear();
-        cin.ignore();
-
-        cout << "Incorret Input type. Please input a number";
-        cin >> amount;
-    }
-    cin.ignore();
     cout << "Deposit Successful\n";
     balance = balance + amount;
 }
 
-void account::withdraw()
-{
+void account::withdraw() // method tp withdraw
+{// ensures amount withdrawn is not more than balance
     double amount;
-    string strAmount;
-    cout << "\nWithdraw Amount: ";
-    getline(cin, strAmount);
-
-    while(typeValidation(strAmount)==false)
-    {
-        cout << "Incorret Input type. Please input a number";
-        cout << "\nWithdraw Amount: ";
-        getline(cin, strAmount);
-    }
-
-    amount=stod(strAmount);
+    amount = AmountValidation();
 
     while(amount > balance)
     {
         cout << "Withdraw amount is greater than current balance" << endl;
         cout << "Withdraw Amount: ";
-        getline(cin, strAmount);
-
-        while(typeValidation(strAmount)==false)
-        {
-            cout << "Incorret Input type. Please input a number";
-            cout << "\nWithdraw Amount: ";
-            getline(cin, strAmount);
-        }
-
-        amount=stod(strAmount);
+        amount = AmountValidation();
     }
 
     balance = balance - amount;
@@ -86,10 +57,14 @@ void account::createAccount()
         cin.ignore();
     }
     cin.ignore();
-    cout << "Account Holder Name: ";
-    getline(cin,nam);
+
+    do{
+        cout << "Account Holder Name: ";
+        getline(cin,nam);
+    }while(nam.empty());
+
     cout << "Current Balance: ";
-    cin >> bal;
+    bal= AmountValidation();
     cin.ignore();
     cout << "Enter 4 digit pin: ";
     getline(cin, strPin);
@@ -186,8 +161,8 @@ bool account::lengthValidation(string pin)
 // incorrent imput should be asked in the function
 bool account::typeValidation(string pin)
 {
-    
-    
+
+
     for (int i = 0; i < pin.length(); ++i)
     {
         if(!isdigit(pin[i]))
@@ -199,6 +174,7 @@ bool account::typeValidation(string pin)
     return true;
 }
 
+// validates the amount of money (makes sure valid double entered)
 double account::AmountValidation()
 {
     double amount;
