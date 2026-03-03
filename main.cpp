@@ -91,8 +91,26 @@ int main()
             cout << "\n***** Login *****" << endl;
             cout << "\nAccount No: ";
             cin >> acc;
+
+            while(cin.fail())
+            {//input validation for account number
+                cin.clear();
+                cin.ignore();
+                cout << "Invaild input. Please enter a number\n";
+                cout << "Account No:  ";
+                cin >> acc;
+            }
             cout << "Pin: ";
             cin >> pin;
+            while(cin.fail() || newAccount.lengthValidation(pin)==false)
+            {//input validation for pin
+                cin.clear();
+                cin.ignore();
+                cout << "Invaild input. Please enter a number\n";
+                cout << "Please enter 4 digit pin:  ";
+
+                cin >> acc;
+            }
             cin.ignore();
 
             //check for login
