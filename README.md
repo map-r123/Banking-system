@@ -12,11 +12,10 @@ A small console-based banking application in C++ that demonstrates basic account
 - Support multiple accounts
 - Authentication (PIN/password)
 - Persist accounts to a txt file
-
+- Input validation and error handling
 
 
 ## Future Enhancements
 
 - Persist transaction history to a file 
-- Improve input validation and error handling
 - Add transaction history and receipts
